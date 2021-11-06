@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import TextFields from "../Register/Components/TextFields";
 
 function Register() {
     useEffect(() => {
@@ -8,7 +9,7 @@ function Register() {
     })
     return (
         <div>
-            register
+            <TextFields/>
         </div>
     );
 }
