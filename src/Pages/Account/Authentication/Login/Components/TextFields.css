@@ -1,4 +1,16 @@
+div {
+    font-size: 30px;
+}
+
 .TextField {
     width: 30%;
     margin: auto;
+}
+
+.input {
+    padding-bottom: 15px;
+}
+
+div.inline {
+     display: inline-block;
 }

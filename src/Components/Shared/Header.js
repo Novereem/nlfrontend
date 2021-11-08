@@ -1,14 +1,27 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
 import {CommandBar} from "@fluentui/react/lib/CommandBar";
 import {Separator} from "@fluentui/react/lib/Separator";
 import {IButtonProps} from "@fluentui/react/lib/Button";
 import {initializeIcons} from "@fluentui/react/lib/Icons";
+import {getAPI} from "../../Redux/selectors";
+import {connect} from "react-redux";
 
 const overflowProps: IButtonProps = { ariaLabel: 'More commands' };
 initializeIcons(/* optional base url */);
 
-function Header() {
+function Header(props) {
+    const[accountInfo, setAccountInfo] = useState({})
+    useEffect(() => {
+        if (props.api !== undefined && localStorage.getItem('token') !== null)
+        {
+            let token = localStorage.getItem('token')
+            props.api.get("account/info/" + token).then(res => {
+                console.log(res.data)
+                setAccountInfo(res.data)
+            })
+        }
+    })
     let history = useHistory();
     function theme(){
         if(localStorage.getItem('darkMode') === 'true')
@@ -93,6 +106,15 @@ function Header() {
             iconProps: { iconName: 'Info' },
             onClick: theme,
         },
+        {
+            key: 'info',
+            text: accountInfo,
+            // This needs an ariaLabel since it's icon-only
+            ariaLabel: 'Info',
+            iconOnly: true,
+            iconProps: { iconName: 'Info' },
+            onClick: theme,
+        }
     ];
 
     return (
@@ -111,4 +133,10 @@ function Header() {
     );
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+        api : getAPI(state)
+    };
+}
+
+export default connect(mapStateToProps)(Header);
