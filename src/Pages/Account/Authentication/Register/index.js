@@ -8,7 +8,7 @@ function Register() {
         }
     })
     return (
-        <div>
+        <div style={{marginTop: "60px"}}>
             <TextFields/>
         </div>
     );

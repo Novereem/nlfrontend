@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {useEffect} from "react";
 import Router from "./Components/Router";
 import Header from "./Components/Shared/Header";
+import HeaderNew from "./Components/Shared/HeaderNew";
 import {setAPI} from "./Redux/actions";
 import {getAPI} from "./Redux/selectors";
 
@@ -21,12 +22,8 @@ function App(props) {
     }, [])
   return (
     <div className="App">
-
-        <ThemeProvider applyTo={"body"} theme={localStorage.getItem('darkMode') === 'true' ? darkTheme : lightTheme}>
-        <Header/>
+        <HeaderNew/>
         <Router/>
-            <button onClick={GetBruh}/>
-        </ThemeProvider>
     </div>
   );
 }

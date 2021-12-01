@@ -26,22 +26,38 @@ function TextFields() {
         }).then(response => { console.log(response.data) })
     }
 
+    function handleUserName(e) {
+        setUsername(e.target.value);
+    }
+
+    function handleEmail(e) {
+        setEmail(e.target.value);
+    }
+
+    function handlePassword(e) {
+        setPassword(e.target.value);
+    }
+
     return (
         <div className={"TextField"}>
-            <TextField className={"input"} placeholder="Email" onChange={(e, value) => setEmail(value)}/>
-            <TextField className={"input"} placeholder="Gebruikersnaam" onChange={(e, value) => setPassword(value)}/>
-            <TextField className={"input"} placeholder="Wachtwoord" onChange={(e, value) => setUsername(value)}/>
-            <br/>
-            <div className={"content"}>
-                Heb je al een account? Log {' '}
-                <div className={"content"} onClick={() => handleClick("login")}>
-                    hier
-                </div>
-                {' '} in
+            <div> Gebruikersnaam<br/>
+                <input className={"text"} placeholder="Gebruikersnaam" onChange={handleUserName}/>
+            </div>
+            <div> Email<br/>
+                <input className={"text"} placeholder="Email" onChange={handleEmail}/>
+            </div>
+            <div> Wachtwoord<br/>
+                <input className={"text"} placeholder="Wachtwoord" onChange={handlePassword}/>
+            </div>
+            <div className={"inline"}>
+            Heb je al een account? Log {' '}
+            <div className={"inline, link"} onClick={() => handleClick("login")}>
+            hier
+            </div>
+                in
             </div>
             <br/>
-            <br/>
-            <PrimaryButton onClick={submit}>Login</PrimaryButton>
+            <button className={"button"} onClick={submit}>Registreer</button>
         </div>
     )
 }
