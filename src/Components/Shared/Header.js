@@ -21,12 +21,14 @@ function Header(props) {
                 setAccountInfo(res.data)
             })
         }
-    })
+    }, [props.api])
     let history = useHistory();
+    let themeIconSunny = true;
     function theme(){
         if(localStorage.getItem('darkMode') === 'true')
         {
             localStorage.setItem('darkMode', "false")
+            themeIconSunny = false;
         }
         else
         {
@@ -36,8 +38,14 @@ function Header(props) {
     }
 
 
+
     function handleClick(target) {
         history.push("/" + target)
+    }
+
+    function logOut() {
+        localStorage.removeItem('token')
+        window.location.reload();
     }
 
     //Checked if logged in
@@ -46,91 +54,110 @@ function Header(props) {
         loginText = "Login";
     }
 
-    const _items = [
-        {
-            key: 'accountItem',
-            text: 'Account',
-            cacheKey: 'myCacheKey', // changing this key will invalidate this item's cache
-            iconProps: { iconName: 'Add' },
-            buttonStyles: '',
-            subMenuProps: {
-                items: [
-                    {
-                        key: 'account',
-                        text: 'Mijn Account',
-                        iconProps: { iconName: 'AccountBrowser'},
-                        'data-automation-id': 'mijnAccountButton', // optional
-                        onClick: () => handleClick("account")
-                    },
-                    {
-                        key: 'login',
-                        text: loginText,
-                        iconProps: { iconName: 'Leave' },
-                        onClick: () => handleClick("login")
-                    },
-                    {
-                        key: 'savedLaptops',
-                        text: 'Mijn Laptops',
-                        iconProps: { iconName: 'LaptopSelected' },
-                    },
-                ],
+    if (localStorage.getItem('token') === null){
+        console.log("account is undefined")
+        const _items = [
+            {
+                key: 'login',
+                text: 'Login',
+                iconProps: { iconName: 'Contact' },
+                onClick: () => handleClick("login"),
             },
-        },
-        {
-            key: 'upload',
-            text: 'Upload',
-            iconProps: { iconName: 'Upload' },
-            href: 'https://developer.microsoft.com/en-us/fluentui',
-        },
-        {
-            key: 'share',
-            text: 'Share',
-            iconProps: { iconName: 'Share' },
-            onClick: () => console.log('Share'),
-        },
-        {
-            key: 'download',
-            text: 'Download',
-            iconProps: { iconName: 'Download' },
-            onClick: () => console.log('Download'),
-        },
-    ];
+        ];
 
-    const _farItems = [
-        {
-            key: 'info',
-            text: 'Info',
-            // This needs an ariaLabel since it's icon-only
-            ariaLabel: 'Info',
-            iconOnly: true,
-            iconProps: { iconName: 'Info' },
-            onClick: theme,
-        },
-        {
-            key: 'info',
-            text: accountInfo,
-            // This needs an ariaLabel since it's icon-only
-            ariaLabel: 'Info',
-            iconOnly: true,
-            iconProps: { iconName: 'Info' },
-            onClick: theme,
-        }
-    ];
+        const _farItems = [
+            {
+                key: 'theme',
+                text: 'Theme',
+                // This needs an ariaLabel since it's icon-only
+                ariaLabel: 'Info',
+                iconOnly: true,
+                iconProps: (localStorage.getItem('darkMode') ? { iconName: 'ClearNight' } : { iconName: 'Sunny' }),
+                onClick: theme,
+            },
+        ];
 
-    return (
-        <div>
-            <CommandBar
-                items={_items}
-                overflowButtonProps={overflowProps}
-                farItems={_farItems}
-                ariaLabel="Inbox actions"
-                primaryGroupAriaLabel="Email actions"
-                farItemsGroupAriaLabel="More actions"
-            />
+        return (
+            <div>
+                <CommandBar
+                    items={_items}
+                    overflowButtonProps={overflowProps}
+                    farItems={_farItems}
+                    ariaLabel="Inbox actions"
+                    primaryGroupAriaLabel="Email actions"
+                    farItemsGroupAriaLabel="More actions"
+                />
 
-            <Separator class={"separator"}/>
-        </div>
-    );
+                <Separator class={"separator"}/>
+            </div>
+        );
+
+    }
+    else
+    {
+        const _items = [
+            {
+                key: 'accountItem',
+                text: 'Account',
+                cacheKey: 'myCacheKey', // changing this key will invalidate this item's cache
+                iconProps: { iconName: 'Add' },
+                buttonStyles: '',
+                subMenuProps: {
+                    items: [
+                        {
+                            key: 'account',
+                            text: accountInfo.username,
+                            iconProps: { iconName: 'AccountBrowser'},
+                            'data-automation-id': 'mijnAccountButton', // optional
+                            onClick: () => handleClick("account")
+                        },
+                        {
+                            key: 'savedLaptops',
+                            text: 'Mijn Laptops',
+                            iconProps: { iconName: 'LaptopSelected' },
+                        },
+                        {
+                            key: 'log out',
+                            text: loginText,
+                            iconProps: { iconName: 'LogOut' },
+                            onClick: () => logOut()
+                        },
+                    ],
+                },
+            },
+        ];
+
+        const _farItems = [
+            {
+                key: 'info',
+                text: 'Info',
+                // This needs an ariaLabel since it's icon-only
+                ariaLabel: 'Info',
+                iconOnly: true,
+                iconProps: (localStorage.getItem('darkMode') ? { iconName: 'ClearNight' } : { iconName: 'Sunny' }),
+                onClick: theme,
+            },
+        ];
+
+        return (
+            <div>
+                <CommandBar
+                    items={_items}
+                    overflowButtonProps={overflowProps}
+                    farItems={_farItems}
+                    ariaLabel="Inbox actions"
+                    primaryGroupAriaLabel="Email actions"
+                    farItemsGroupAriaLabel="More actions"
+                />
+
+                <Separator class={"separator"}/>
+            </div>
+        );
+    }
+
+
+
+
 }
 
 const mapStateToProps = (state) => {
