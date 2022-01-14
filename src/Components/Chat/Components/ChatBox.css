@@ -1,0 +1,36 @@
+.chat-container {
+    padding-top: 20px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.chat-box {
+    width: 50%;
+    border: solid black;
+    height: auto;
+    min-height: 100px;
+}
+
+.chat-message {
+    background-color: #00B6FF;
+    text-align: left;
+    padding:5px;
+    min-width: 5%;
+    font-size:20px;
+    margin: 0px auto 0px auto;
+    margin: 5px;
+    display: table;
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px 1px grey;
+    color: black;
+}
+
+.chat-input {
+    display: inline;
+    display: flex;
+}
+
+.chat-textfield {
+    width: 100%;
+}

@@ -1,0 +1,26 @@
+.laptop-container {
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    width: 100%;
+}
+
+.laptop {
+    justify-content: center;
+    width: 40%;
+    height: 300px;
+    border: red;
+}
+
+.laptop-title {
+    font-size: xxx-large;
+    color: black;
+    padding-top: 20px;
+}
+
+.laptop-specs {
+    font-size: large;
+    color: black;
+    display: flex;
+    align-items: flex-end;
+}

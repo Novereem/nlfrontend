@@ -23,7 +23,7 @@ function TextFields() {
             email: email,
             username: username,
             password: password
-        }).then(response => { console.log(response.data) })
+        }).then(response => { console.log("registered") })
     }
 
     function handleUserName(e) {

@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import ProfilePivot from "./Components/Pivot";
+import Main from "./Components/Main";
 
 function Account() {
     useEffect(() => {
@@ -9,7 +9,7 @@ function Account() {
     })
     return (
         <div>
-            <ProfilePivot/>
+            <Main/>
         </div>
     );
 }

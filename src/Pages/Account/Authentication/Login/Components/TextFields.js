@@ -19,16 +19,31 @@ function TextFields() {
     }
 
     function submit() {
-        api.post("/account/login", {
-            username: username,
-            password: password
-        }).then(response => {
-            localStorage.setItem('token', response.data)
-            history.push("/")
-            window.location.reload();
-        })
+        if (OnlyNumbersLetters(username)) {
+            api.post("/account/login", {
+                username: username,
+                password: password
+            }).then(response => {
+                if (response.data === "/403") {
+                    alert("wrong username or password");
+                }
+                else
+                {
+                    localStorage.setItem('token', response.data)
+                    history.push("/")
+                    window.location.reload();
+                }
+            })
+        }
+        else
+        {
+            alert("a username can only contain letters and numbers");
+        }
     }
 
+    function OnlyNumbersLetters(str) {
+        return /^[0-9a-zA-Z]+$/.test(str)
+    }
     function handleUserName(e) {
         setUsername(e.target.value);
     }

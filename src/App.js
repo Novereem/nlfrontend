@@ -1,24 +1,24 @@
 import './App.css';
-import {lightTheme, darkTheme} from "./Themes";
-import {ThemeProvider} from "@fluentui/react";
 import {connect} from "react-redux";
 import {useEffect} from "react";
 import Router from "./Components/Router";
-import Header from "./Components/Shared/Header";
 import HeaderNew from "./Components/Shared/HeaderNew";
-import {setAPI} from "./Redux/actions";
+import {setAPI, setAPITUT} from "./Redux/actions";
 import {getAPI} from "./Redux/selectors";
 
 const axios = require("axios")
 const api = axios.create({
   baseURL: "http://localhost:5000"
 })
+
+const apiTut = axios.create({
+    baseURL: "https://localhost:6001"
+})
+
 function App(props) {
     useEffect(() => {
-        if(localStorage.getItem('darkMode') === undefined){
-            localStorage.setItem('darkMode', "true")
-        }
         props.dispatch(setAPI(api));
+        props.dispatch(setAPITUT(apiTut));
     }, [])
   return (
     <div className="App">
@@ -26,10 +26,6 @@ function App(props) {
         <Router/>
     </div>
   );
-}
-
-function GetBruh(){
-    api.get("/laptop").then(response => { console.log(response.data) })
 }
 
 const mapStateToProps = (state) => {

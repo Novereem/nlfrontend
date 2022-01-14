@@ -17,7 +17,6 @@ function Header(props) {
         {
             let token = localStorage.getItem('token')
             props.api.get("account/info/" + token).then(res => {
-                console.log(res.data)
                 setAccountInfo(res.data)
             })
         }
@@ -55,7 +54,6 @@ function Header(props) {
     }
 
     if (localStorage.getItem('token') === null){
-        console.log("account is undefined")
         const _items = [
             {
                 key: 'login',
